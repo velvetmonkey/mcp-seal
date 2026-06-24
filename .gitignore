@@ -1,0 +1,6 @@
+.lake/
+/.env
+/.venv
+__pycache__/
+*.pyc
+.juno_task/
