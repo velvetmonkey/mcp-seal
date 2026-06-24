@@ -33,6 +33,11 @@ The gate runs forever; each individual ticket is single-use. Think turnstile tic
 
 Four ways to watch the gate work, ordered simplest to richest. Each is self-contained with copy-paste commands. Start at the top.
 
+- **Demo 1** (one command): watch default-deny, the one-shot ticket, and TTL expiry check themselves.
+- **Demo 2** (by hand): drive the gate yourself over stdio and mint a ticket with your own hands.
+- **Demo 3** (zero deps): a scripted malicious tool call, blocked, allowed once, blocked again.
+- **Demo 4** (flagship): a real LangGraph agent whose destructive action dies at the gate.
+
 Every demo needs the `seal` binary, so build it once:
 
 ```bash
@@ -79,7 +84,9 @@ Same gate, driven yourself over stdio, so you can see there is no trick. This ne
     npx -y @modelcontextprotocol/server-everything stdio
 ```
 
-The trailing `sleep 3` holds the pipe open so the `npx` child can boot on a cold first run. Expect `initialize` forwarded with a real upstream reply, and `id:2` returning a seal block (`isError: true`, `approval required: 13354254271524378478`) because no approval exists yet. The block error hands you the exact target hash you need (see [Reference: policies and the target hash](#reference-policies-and-the-target-hash)).
+The trailing `sleep 3` holds the pipe open so the `npx` child can boot on a cold first run. Expect `initialize` forwarded with a real upstream reply, and `id:2` returning a seal block (`isError: true`, `approval required: 13354254271524378478`) because no approval exists yet.
+
+That long number is the **target hash**: a stable fingerprint of this exact request (the tool name plus any bound argument values), so an approval for one action cannot quietly unlock a different one. You do not compute it; the block error hands it straight to you, and you write that same number onto the guest list to approve the call. (Full detail: [Reference: policies and the target hash](#reference-policies-and-the-target-hash).)
 
 Now mint that hash and re-run:
 
@@ -109,10 +116,10 @@ The trailing `stdio` argument matters: without it the launcher prints a banner t
 A scripted malicious `tools/call` that tries to drop a production table, run three times against the verified core, with zero external dependencies. (Scripted JSON-RPC, no LLM and no LangGraph — the live-agent case is Demo 4.) It shows the full lifecycle of a single ticket: blocked cold, allowed once after a trusted human approval is appended, then blocked again once that one-shot approval is consumed.
 
 ```bash
-lake exe automaton_tests
-lake exe axiom_check
-python3 test/integration/test_seal.py
-python3 demo/blocked_call_smoke.py
+lake exe automaton_tests               # the verified automaton's own test suite
+lake exe axiom_check                    # print the proof's axiom footprint
+python3 test/integration/test_seal.py  # gate behaviour over real stdio
+python3 demo/blocked_call_smoke.py     # the malicious drop-table call, blocked
 ```
 
 ### Demo 4: flagship, seal x Canary
