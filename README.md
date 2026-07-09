@@ -136,12 +136,7 @@ The runner lives in the [Canary](https://github.com/velvetmonkey/canary) repo an
 
 1. **Lean toolchain** for `seal` itself. Install [`elan`](https://github.com/leanprover/elan); it pins `leanprover/lean4:v4.28.0` from `lean-toolchain`. Then in this repo: `lake build`.
 2. **Node.js v22.x** for the upstream MCP server. (nvm: `nvm install 22`.)
-3. **flywheel-memory** (the real MCP server `seal` spawns):
-   ```bash
-   git clone https://github.com/velvetmonkey/flywheel-memory
-   cd flywheel-memory && npm ci && npm run build
-   # server entry: packages/mcp-server/dist/index.js
-   ```
+3. **The upstream memory MCP server** that `seal` spawns (a private local-first Obsidian-vault memory server, provided separately). Build it with `npm ci && npm run build`; server entry is `packages/mcp-server/dist/index.js`.
 4. **Canary** (the LangGraph host + demo runner), Python 3.12 via [`uv`](https://github.com/astral-sh/uv):
    ```bash
    git clone https://github.com/velvetmonkey/canary
