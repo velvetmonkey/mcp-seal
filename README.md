@@ -126,7 +126,7 @@ python3 demo/blocked_call_smoke.py     # the malicious drop-table call, blocked
 
 The applied demo: `seal` wrapped in front of a real LangGraph agent ([Canary](https://github.com/velvetmonkey/canary), an ESG regulatory-change pipeline) writing to an MCP vault server. Canary's legitimate report `note/create` is approved and succeeds; a destructive `note/delete` then dies at the gate. Without `seal` the file is deleted; with `seal` it is blocked and the file survives byte-identical. This is the artefact for a pitch or a skeptical security reviewer: it proves the gate on a real agent doing a real task, not just in a unit test.
 
-The runner lives in the [Canary](https://github.com/velvetmonkey/canary) repo and orchestrates three repositories: Canary (the host), `seal` (this repo), and [flywheel-memory](https://github.com/velvetmonkey/flywheel-memory) (the MCP server being gated). It runs fully offline (no LLM key).
+The runner lives in the [Canary](https://github.com/velvetmonkey/canary) repo and orchestrates three repositories: Canary (the host), `seal` (this repo), and flywheel-memory (the MCP server being gated). It runs fully offline (no LLM key).
 
 > Scope note: a single container (in the Canary repo) bundles all three repos so the multi-repo *demo* runs reproducibly with one command. That container is a demo harness only. `seal` itself is a single native binary with no container or runtime dependencies; adoption is a one-line host config change.
 
@@ -280,7 +280,6 @@ Part of the velvetmonkey verified-cognition stack:
 
 - **mcp-seal** (this repo): the verified MCP approval-gate sidecar.
 - [canary](https://github.com/velvetmonkey/canary): a LangGraph compliance pipeline that hosts the flagship [seal x Canary demo](#demo-4-flagship-seal-x-canary).
-- [flywheel-memory](https://github.com/velvetmonkey/flywheel-memory): the knowledge-graph MCP server that `seal` gates in that demo.
 
 ## License
 
