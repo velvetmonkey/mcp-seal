@@ -1,3 +1,23 @@
+> # 🚨 FROZEN SNAPSHOT. DO NOT BUILD AGAINST THIS REPO. 🚨
+>
+> **This repository is an archived, frozen snapshot. It is not the product and it is not maintained.**
+> Search engines reach it first, which is the only reason you are probably here.
+>
+> | You want | Go to |
+> |---|---|
+> | The product, and where to start | **[velvetmonkey/seal](https://github.com/velvetmonkey/seal)** |
+> | The live Lean kernel this snapshot froze | **[velvetmonkey/mcp-seal-dev](https://github.com/velvetmonkey/mcp-seal-dev)** |
+> | The deployable host | **[velvetmonkey/seal-host](https://github.com/velvetmonkey/seal-host)** |
+>
+> `seal-host/lake-manifest.json` pins its Lean dependency to `mcp-seal-dev`, **not** to this
+> repository, despite registering it under the package name `mcp-seal`. That name collision is
+> exactly why this banner exists.
+>
+> Everything below this line is preserved as it was on the day it was frozen. It is history, not
+> current documentation, and some of it is no longer true.
+
+---
+
 # mcp-seal
 
 [![CI](https://github.com/velvetmonkey/mcp-seal/actions/workflows/ci.yml/badge.svg)](https://github.com/velvetmonkey/mcp-seal/actions/workflows/ci.yml)
